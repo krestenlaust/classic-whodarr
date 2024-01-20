@@ -12,16 +12,21 @@ import whodarr.classic.util.FileUtility
  */
 class SerialFolder(folderPath: String, serialNumber: Int, serialFileFilter: SerialFileFilter):
   def allFiles: Seq[String] =
-    allFilesUnfiltered
-      .filter(p => serialFileFilter.episodeFileInSerialPredicate(p, serialNumber) && serialFileFilter.episodeFilePredicate(p))
+    allFilesInSerial(_ => true)
+
+  def allNonBonusFiles: Seq[String] =
+    allFilesInSerial(p => !serialFileFilter.episodeBonusFilePredicate(p))
 
   def allSubtitleFiles: Seq[String] =
-    allFilesUnfiltered
-      .filter(p => serialFileFilter.episodeFileInSerialPredicate(p, serialNumber) && serialFileFilter.episodeSubtitleFilePredicate(p))
+    allFilesInSerial(serialFileFilter.episodeSubtitleFilePredicate)
 
   def allVideoFiles: Seq[String] =
-    allFilesUnfiltered
-      .filter(p => serialFileFilter.episodeFileInSerialPredicate(p, serialNumber) && serialFileFilter.episodeVideoFilePredicate(p))
+    allFilesInSerial(serialFileFilter.episodeVideoFilePredicate)
+
+  private def allFilesInSerial(predicate: String => Boolean): Seq[String] =
+    allFilesUnfiltered.filter(p => serialFileFilter.episodeFileInSerialPredicate(p, serialNumber) &&
+      serialFileFilter.episodeFilePredicate(p) &&
+      predicate(p))
 
   // TODO: Handle caught exception.
   private def allFilesUnfiltered = FileUtility.getFilePathsInFolder(folderPath).get
