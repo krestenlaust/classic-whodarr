@@ -10,7 +10,7 @@ import whodarr.classic.util.FileUtility
  * @param serialNumber The story number of a serial.
  * @param serialFileFilter The filter to use to identify file types.
  */
-class SerialFolderImpl(folderPath: String, serialNumber: Int, serialFileFilter: SerialFileFilter):
+class SerialFolderImpl(folderPath: String, serialNumber: Int, serialFileFilter: SerialFileFilter) extends SerialFolder:
   def allFiles: Seq[String] =
     allFilesInSerial(_ => true)
 
