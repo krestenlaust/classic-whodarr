@@ -1,7 +1,7 @@
 package whodarr.classic.cli
 
-import whodarr.classic.organizer.SerialFileReorganizer
-import whodarr.classic.organizer.webarchive.{WebArchiveSerialFilenameConverter, WebArchiveSerialFolder}
+import whodarr.classic.organizer.{SerialFileReorganizer, SerialFolder}
+import whodarr.classic.organizer.webarchive.{WebArchiveSerialFileFilter, WebArchiveSerialFilenameConverter}
 
 import scala.io.StdIn
 
@@ -21,7 +21,7 @@ def main(): Unit = {
   println("Enter Serial designation> ")
   val designation = StdIn.readLine()
 
-  val serialFolder = WebArchiveSerialFolder(dirpath)
+  val serialFolder = new SerialFolder(dirpath, serialNumber, new WebArchiveSerialFileFilter)
   val serialConverter = new WebArchiveSerialFilenameConverter(designation, serialEpisodeOffset, serialNumber)
   val reorganizer = SerialFileReorganizer(serialFolder, serialConverter)
 
