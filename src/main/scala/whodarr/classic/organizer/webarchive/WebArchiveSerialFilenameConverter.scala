@@ -4,7 +4,7 @@ import whodarr.classic.organizer.{SerialFilenameConverter, SerialFilenameSanitiz
 
 class WebArchiveSerialFilenameConverter(val serialDesignation: String, val serialEpisodeOffset: Int, val serialNumber: Int) extends SerialFilenameConverter, SerialFilenameSanitizer:
   override def convertEpisodeName(filename: String): String =
-    val episodeNumber = filename.substring(filename.lastIndexOf('('), filename.lastIndexOf(')')).toInt
+    val episodeNumber = filename.substring(filename.lastIndexOf('(') + 1, filename.lastIndexOf(')')).toInt
     sanitizeFilename(filename)
       .replace(serialDesignation, s"${serialDesignation.substring(0, 3)}E${"%02d".format(episodeNumber + serialEpisodeOffset)}")
 
