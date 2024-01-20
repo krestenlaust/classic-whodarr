@@ -3,12 +3,11 @@ package whodarr.classic.cli
 import whodarr.classic.organizer.{SerialFileReorganizer, SerialFolder}
 import whodarr.classic.organizer.webarchive.{WebArchiveSerialFileFilter, WebArchiveSerialFilenameConverter}
 
+import java.nio.file.Paths
 import scala.io.StdIn
 
 @main
 def main(): Unit = {
-  println("Hello world!")
-
   println("Enter path to folder> ")
   val dirpath = StdIn.readLine()
 
@@ -26,5 +25,5 @@ def main(): Unit = {
   val reorganizer = SerialFileReorganizer(serialFolder, serialConverter)
 
   val reorganizedFiles = reorganizer.reorganized
-  reorganizedFiles.foreach(tup => println(s"${tup._1}\t->${tup._2}"))
+  reorganizedFiles.foreach(tup => println(s"${Paths.get(tup._1).getFileName}\t->${Paths.get(tup._2).getFileName}"))
 }
