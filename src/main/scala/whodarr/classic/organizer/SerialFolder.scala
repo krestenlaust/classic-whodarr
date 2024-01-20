@@ -23,4 +23,5 @@ class SerialFolder(folderPath: String, serialNumber: Int, serialFileFilter: Seri
     allFilesUnfiltered
       .filter(p => serialFileFilter.episodeFileInSerialPredicate(p, serialNumber) && serialFileFilter.episodeVideoFilePredicate(p))
 
-  private def allFilesUnfiltered = FileUtility.getFilePathsInFolder(folderPath)
+  // TODO: Handle caught exception.
+  private def allFilesUnfiltered = FileUtility.getFilePathsInFolder(folderPath).get
