@@ -1,11 +1,18 @@
 daemon.conf
-.bloop/
-.metals/
-.vscode/
+
+# IDE specific
+
+## IntelliJ
+.bsp/
+.idea/
 metals.sbt
 
-.idea/
+## VS Code
+.metals/
+.bloop/
+.vscode/
 
+# Other
 *.class
 *.log
 
