@@ -32,6 +32,8 @@ def main(): Unit = {
   val proceed = StdIn.readChar().toLower == 'y'
 
   if (proceed) {
-    reorganizedFiles.foreach(tup => FileUtility.move(tup._1, tup._2))
+    reorganizedFiles.foreach(tup => {
+      println(s"Moved: ${FileUtility.move(tup._1, tup._2)}")
+    })
   }
 }
