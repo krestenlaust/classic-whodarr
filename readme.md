@@ -5,6 +5,7 @@
 Automatically download Classic Doctor Who (only from official sources) and reorganize them into a format Plex/Jellyfin can understand.
 
 ## Modules
+![](docs/componentdiagram.svg)
 
 The following description describes the program once it reaches v1.0
 

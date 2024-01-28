@@ -1,0 +1,30 @@
+@startuml
+
+cloud "Doctor Who Episode API"
+cloud "WebArchive"
+
+package "Classic Whodarr" {
+    [cli] --> [organizer]
+    [daemon] --> [organizer]
+    [daemon] --> [downloader]
+    [daemon] --> [watcher]
+}
+
+node "Media Playing Services" {
+    [Plex]
+    [Jellyfin]
+}
+
+node "Downloading Services" {
+    [qBitTorrent]
+}
+
+"Downloading Services" --> "WebArchive"
+
+[downloader] --> "Downloading Services"
+[downloader] --> [Doctor Who Episode API]
+
+[watcher] --> "Media Playing Services"
+[watcher] --> [Doctor Who Episode API]
+
+@enduml
