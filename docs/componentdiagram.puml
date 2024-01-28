@@ -4,10 +4,12 @@ cloud "Doctor Who Episode API"
 cloud "WebArchive"
 
 package "Classic Whodarr" {
-    [cli] --> [organizer]
-    [daemon] --> [organizer]
     [daemon] --> [downloader]
     [daemon] --> [watcher]
+    [downloader] --> [episodeinfo]
+    [watcher] --> [episodeinfo]
+    [cli] --> [organizer]
+    [daemon] --> [organizer]
 }
 
 node "Media Playing Services" {
@@ -19,12 +21,11 @@ node "Downloading Services" {
     [qBitTorrent]
 }
 
+[episodeinfo] --> "Doctor Who Episode API"
 "Downloading Services" --> "WebArchive"
 
 [downloader] --> "Downloading Services"
-[downloader] --> [Doctor Who Episode API]
 
 [watcher] --> "Media Playing Services"
-[watcher] --> [Doctor Who Episode API]
 
 @enduml
