@@ -1,7 +1,7 @@
 package whodarr.classic.cli
 
-import whodarr.classic.organizer.{SerialFileReorganizer, SerialFolderImpl}
 import whodarr.classic.organizer.webarchive.{WebArchiveSerialFileFilter, WebArchiveSerialFilenameConverter}
+import whodarr.classic.organizer.{SerialFileReorganizer, SerialFolderImpl}
 import whodarr.classic.util.FileUtility
 
 import java.nio.file.Paths
