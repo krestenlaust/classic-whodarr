@@ -1,4 +1,4 @@
-package whodarr.classic.types
+package whodarr.classic.episodeinfo
 
 /**
  * Used to ID serials.

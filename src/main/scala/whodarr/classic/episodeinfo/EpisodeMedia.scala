@@ -1,4 +1,4 @@
-package whodarr.classic.types
+package whodarr.classic.episodeinfo
 
 import java.nio.file.Path
 

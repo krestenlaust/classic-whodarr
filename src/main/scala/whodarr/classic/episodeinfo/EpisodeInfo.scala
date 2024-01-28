@@ -1,7 +1,5 @@
 package whodarr.classic.episodeinfo
 
-import whodarr.classic.types.{EpisodeId, SerialId}
-
 import scala.concurrent.Future
 
 trait EpisodeInfo:
