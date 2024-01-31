@@ -2,6 +2,7 @@ package whodarr.classic.cli
 
 import whodarr.classic.organizer.webarchive.{WebArchiveSerialFileFilter, WebArchiveSerialFilenameConverter}
 import whodarr.classic.organizer.{SerialFileReorganizer, SerialFolderImpl}
+import whodarr.classic.organizer.{SerialFileReorganizer, SerialFolderLocal}
 import whodarr.classic.util.FileUtility
 
 import java.nio.file.Paths
@@ -21,7 +22,7 @@ def main(): Unit = {
   println("Enter Serial designation> ")
   val designation = StdIn.readLine()
 
-  val serialFolder = new SerialFolderImpl(dirpath, serialNumber, new WebArchiveSerialFileFilter)
+  val serialFolder = new SerialFolderLocal(dirpath, serialNumber, new WebArchiveSerialFileFilter)
   val serialConverter = new WebArchiveSerialFilenameConverter(designation, serialEpisodeOffset, serialNumber)
   val reorganizer = SerialFileReorganizer(serialFolder, serialConverter)
 
