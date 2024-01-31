@@ -1,4 +1,4 @@
-package whodarr.classic.organizer
+package whodarr.classic.episodeinfo
 
 trait SerialFolder:
   def allFiles: Seq[String]

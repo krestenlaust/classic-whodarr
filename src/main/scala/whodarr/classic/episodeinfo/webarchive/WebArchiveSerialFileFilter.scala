@@ -1,6 +1,6 @@
-package whodarr.classic.organizer.webarchive
+package whodarr.classic.episodeinfo.webarchive
 
-import whodarr.classic.organizer.SerialFileFilter
+import whodarr.classic.episodeinfo.SerialFileFilter
 
 import java.nio.file.Paths
 

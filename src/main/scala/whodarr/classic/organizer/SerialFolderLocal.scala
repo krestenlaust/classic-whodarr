@@ -1,5 +1,6 @@
 package whodarr.classic.organizer
 
+import whodarr.classic.episodeinfo.{SerialFileFilter, SerialFolder}
 import whodarr.classic.util.FileUtility
 
 /**
