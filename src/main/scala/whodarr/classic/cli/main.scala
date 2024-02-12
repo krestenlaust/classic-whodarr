@@ -34,7 +34,7 @@ def main(): Unit = {
 
   if (proceed) {
     reorganizedFiles.foreach(tup => {
-      println(s"Moved: ${FileUtility.move(tup._1, tup._2)}")
+      println(s"Moved: ${FileUtility.move(Paths.get(tup._1), Paths.get(tup._2))}")
     })
   }
 }
