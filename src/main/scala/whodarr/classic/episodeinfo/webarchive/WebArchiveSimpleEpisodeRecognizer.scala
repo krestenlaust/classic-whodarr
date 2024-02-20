@@ -9,3 +9,4 @@ import whodarr.classic.episodeinfo.{EpisodeId, EpisodeMedia, EpisodeRecognizer}
 class WebArchiveSimpleEpisodeRecognizer(episodeOffset: Int) extends EpisodeRecognizer:
   override def detectFromPath(filePath: String): EpisodeId =
     ???
+  override def detectFromPath(filePath: String): Option[EpisodeId] =

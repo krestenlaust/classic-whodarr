@@ -22,7 +22,12 @@ class SerialFolderLocal(folderPath: String, serialNumber: Int, serialFileFilter:
       serialFileFilter.episodeFileInSerialPredicate(p.toString, serialNumber) &&
       serialFileFilter.episodeFilePredicate(p.toString) &&
       predicate(p.toString)
-    ).map(p => EpisodeMedia(episodeRecognizer.detectFromPath(p.toString), p))
+    ).flatMap { path =>
+      episodeRecognizer.detectFromPath(path.toString) match {
+        case Some(episodeId) => Some(EpisodeMedia(episodeId, path))
+        case None => None
+      }
+    }
 
   // TODO: Handle caught exception.
   private def allFilesUnfiltered: Seq[Path] =
