@@ -15,29 +15,34 @@ import java.nio.file.Path
  */
 class SerialFolderLocal(folderPath: String, storyNumber: Int, serialFileFilter: SerialFileFilter, episodeRecognizer: EpisodeRecognizer) extends SerialFolder:
   def allFiles: Seq[EpisodeMedia] =
-    allFilesInSerial(_ => true)
+    allMediaFiltered(_ => true)
 
-  private def allFilesInSerial(predicate: String => Boolean): Seq[EpisodeMedia] =
-    allFilesUnfiltered.filter(p =>
-      serialFileFilter.episodeFileInSerialPredicate(p.toString, serialNumber) &&
-      serialFileFilter.episodeFilePredicate(p.toString) &&
-      predicate(p.toString)
-    ).flatMap { path =>
-      episodeRecognizer.detectFromPath(path.toString) match {
+  def allNonBonusFiles: Seq[EpisodeMedia] =
+    allMediaFiltered(p => !serialFileFilter.episodeBonusFilePredicate(p))
+
+  def allSubtitleFiles: Seq[EpisodeMedia] =
+    allMediaFiltered(serialFileFilter.episodeSubtitleFilePredicate)
+
+  def allVideoFiles: Seq[EpisodeMedia] =
+    allMediaFiltered(serialFileFilter.episodeVideoFilePredicate)
+
+  private def filesFiltered(files: Seq[Path], predicate: String => Boolean): Seq[Path] =
+    files.filter(p =>
+      serialFileFilter.episodeFileInSerialPredicate(p.toString, storyNumber) &&
+        serialFileFilter.episodeFilePredicate(p.toString) &&
+        predicate(p.toString)
+    )
+
+  private def filesToEpisodeMedia(files: Seq[Path]): Seq[EpisodeMedia] =
+    files.flatMap { path =>
+      episodeRecognizer.detectFromPath(path.toString) match
         case Some(episodeId) => Some(EpisodeMedia(episodeId, path))
         case None => None
-      }
     }
+
+  private def allMediaFiltered(predicate: String => Boolean): Seq[EpisodeMedia] =
+    filesToEpisodeMedia(filesFiltered(allFilesUnfiltered, predicate))
 
   // TODO: Handle caught exception.
   private def allFilesUnfiltered: Seq[Path] =
     FileUtility.getFilePathsInFolder(folderPath).get
-
-  def allNonBonusFiles: Seq[EpisodeMedia] =
-    allFilesInSerial(p => !serialFileFilter.episodeBonusFilePredicate(p))
-
-  def allSubtitleFiles: Seq[EpisodeMedia] =
-    allFilesInSerial(serialFileFilter.episodeSubtitleFilePredicate)
-
-  def allVideoFiles: Seq[EpisodeMedia] =
-    allFilesInSerial(serialFileFilter.episodeVideoFilePredicate)
