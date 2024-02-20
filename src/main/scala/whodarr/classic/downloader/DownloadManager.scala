@@ -6,9 +6,14 @@ import scala.collection.mutable
 import scala.concurrent.Future
 
 class DownloadManager:
-  val queuedEpisodes: mutable.HashSet[EpisodeId] = mutable.HashSet()
+  val queuedEpisodes: mutable.Map[EpisodeId, List[Future[Option[EpisodeMedia]]]] = mutable.Map()
   val acquirers: List[MediaAcquirer] = List()
 
-  def downloadEpisode(episodeId: EpisodeId): List[Future[Option[EpisodeMedia]]] =
-    queuedEpisodes.add(episodeId)
+  def queueEpisode(episodeId: EpisodeId): Unit =
+    queuedEpisodes.addOne(episodeId, downloadEpisode(episodeId))
+
+  def serializeEpisodeList =
+    ???
+
+  private def downloadEpisode(episodeId: EpisodeId): List[Future[Option[EpisodeMedia]]] =
     acquirers.map(a => a.acquireMedia(episodeId))
