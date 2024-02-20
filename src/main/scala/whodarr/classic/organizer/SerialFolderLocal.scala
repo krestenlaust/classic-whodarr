@@ -10,10 +10,10 @@ import java.nio.file.Path
  * Filters files for a specific serial, so multiple serials can still be in the same folder.
  *
  * @param folderPath       The path to the folder of serial episodes.
- * @param serialNumber     The story number of a serial.
+ * @param storyNumber     The story number of a serial.
  * @param serialFileFilter The filter to use to identify file types.
  */
-class SerialFolderLocal(folderPath: String, serialNumber: Int, serialFileFilter: SerialFileFilter, episodeRecognizer: EpisodeRecognizer) extends SerialFolder:
+class SerialFolderLocal(folderPath: String, storyNumber: Int, serialFileFilter: SerialFileFilter, episodeRecognizer: EpisodeRecognizer) extends SerialFolder:
   def allFiles: Seq[EpisodeMedia] =
     allFilesInSerial(_ => true)
 
