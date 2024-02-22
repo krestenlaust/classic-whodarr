@@ -11,7 +11,7 @@ class SerialFileReorganizer(serialFolder: SerialFolder, serialFilenameConverter:
       .map(
         media =>
           media.path.toString -> media.path.getParent.resolveSibling(
-            serialFilenameConverter.convertEpisodeName(media.path.getFileName.toString)
+            serialFilenameConverter.convertEpisodeFilename(media.path.getFileName.toString)
           ).toString
       )
       .toMap
