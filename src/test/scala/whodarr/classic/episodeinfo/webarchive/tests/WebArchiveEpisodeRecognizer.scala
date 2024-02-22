@@ -4,7 +4,7 @@ import org.scalatest.flatspec.AnyFlatSpec
 import whodarr.classic.episodeinfo.{EpisodeId, EpisodeRecognizer}
 import whodarr.classic.episodeinfo.webarchive.WebArchiveSimpleEpisodeRecognizer
 
-class WebArchiveOrganizerTests extends AnyFlatSpec {
+class WebArchiveEpisodeRecognizer extends AnyFlatSpec {
   "Simple Recognizer" should "recognize simple episode name" in {
     // Arrange
     val recognizer: EpisodeRecognizer = WebArchiveSimpleEpisodeRecognizer(10) // Offset by 10 episodes
