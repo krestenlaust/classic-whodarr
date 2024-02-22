@@ -19,20 +19,17 @@ def main(): Unit = {
   println("Enter Story number> ")
   val storyNumber = StdIn.readInt
 
-  println("Enter Serial designation> ")
-  val designation = StdIn.readLine()
+  val episodeRecognizer = WebArchiveSimpleEpisodeRecognizer(serialEpisodeOffset)
 
   val serialFolder = SerialFolderLocal(
     dirpath,
     storyNumber,
     WebArchiveSerialFileFilter(),
-    WebArchiveSimpleEpisodeRecognizer(serialEpisodeOffset)
+    episodeRecognizer
   )
 
   val serialConverter = WebArchiveSerialFilenameConverter(
-    designation,
-    serialEpisodeOffset,
-    storyNumber
+    episodeRecognizer
   )
 
   val reorganizer = SerialFileReorganizer(serialFolder, serialConverter)
