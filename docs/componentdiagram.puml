@@ -10,6 +10,7 @@ package "Classic Whodarr" {
     [watcher] --> [episodeinfo]
     [cli] --> [organizer]
     [daemon] --> [organizer]
+    [organizer] --> [episodeinfo]
 }
 
 node "Media Playing Services" {
