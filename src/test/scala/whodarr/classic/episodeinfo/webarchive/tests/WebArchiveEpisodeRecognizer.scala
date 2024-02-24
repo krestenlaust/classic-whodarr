@@ -21,9 +21,10 @@ class WebArchiveEpisodeRecognizer extends AnyFlatSpec {
 
   "Simple Recognizer" should "recognize episode names in long paths" in {
     val recognizer: EpisodeRecognizer = WebArchiveSimpleEpisodeRecognizer(0)
+    val fileSep: String = System.getProperty("file.separator")
 
     assert(
-      recognizer.detectFromPath("""D:\Doctor Who\doctorwho-s10\season 10 doctor 3\Doctor Who - S10E01 (065) - The Three Doctors - Parts 1-4\Doctor Who - S10E01 (065) - The Three Doctors (1).avi""").get ===
+      recognizer.detectFromPath(s"""${fileSep}Doctor Who${fileSep}Doctor Who - S10E01 (065) - The Three Doctors - Parts 1-4${fileSep}Doctor Who - S10E01 (065) - The Three Doctors (1).avi""").get ===
       EpisodeId(10, 1)
     )
   }
