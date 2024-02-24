@@ -7,4 +7,11 @@ class SerialFileReorganizer(serialFolder: SerialFolder, serialFilenameConverter:
    * @return current file paths mapped to new paths.
    */
   def reorganized: Map[String, String] =
-    serialFolder.allNonBonusFiles.map(path => path -> serialFilenameConverter.convertEpisodeName(path)).toMap
+    serialFolder.allNonBonusFiles
+      .map(
+        media =>
+          media.path.toString -> media.path.getParent.resolveSibling(
+            serialFilenameConverter.convertEpisodeFilename(media.path.getFileName.toString)
+          ).toString
+      )
+      .toMap
