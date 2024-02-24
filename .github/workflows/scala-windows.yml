@@ -17,24 +17,8 @@ jobs:
         uses: actions/setup-java@v3
         with:
           java-version: '11'
+          distribution: 'temurin'
           cache: 'sbt'
 
-      - name: Cache sbt dependencies
-        uses: actions/cache@v2
-        with:
-          path: ~/.sbt
-          key: ${{ runner.os }}-sbt-${{ hashFiles('**/*.sbt') }}
-          restore-keys: |
-            ${{ runner.os }}-sbt-
-
-      - name: Cache ivy2 dependencies
-        uses: actions/cache@v2
-        with:
-          path: ~/.ivy2/cache
-          key: ${{ runner.os }}-ivy2-${{ hashFiles('**/*.sbt') }}
-          restore-keys: |
-            ${{ runner.os }}-ivy2-
-
       - name: Run tests
-        shell: bash
         run: sbt test
