@@ -32,7 +32,7 @@ def main(): Unit = {
     episodeRecognizer
   )
 
-  val reorganizer = SerialFileReorganizer(serialFolder, serialConverter)
+  val reorganizer = SerialFileReorganizer(serialFolder, serialConverter, None)
 
   val reorganizedFiles = reorganizer.reorganized
   reorganizedFiles.foreach(tup => println(s"${Paths.get(tup._1).getFileName}\t\t->${Paths.get(tup._2).getFileName}"))
