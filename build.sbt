@@ -9,5 +9,8 @@ lazy val root = (project in file("."))
 
 libraryDependencies ++= Seq(
   "org.scalatest" %% "scalatest" % "3.2.17" % "test",
-  "com.typesafe"   % "config"    % "1.4.3"
+  "com.typesafe"   % "config"    % "1.4.3",
+
+// Daemon
+  "com.dorkbox" % "SystemTray" % "4.4"
 )
