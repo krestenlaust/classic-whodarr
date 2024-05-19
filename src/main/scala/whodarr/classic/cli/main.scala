@@ -1,8 +1,8 @@
 package whodarr.classic.cli
 
-import whodarr.classic.episodeinfo.webarchive.{WebArchiveSimpleEpisodeRecognizer, WebArchiveSerialFileFilter}
+import whodarr.classic.episodeinfo.webarchive.{ WebArchiveSerialFileFilter, WebArchiveSimpleEpisodeRecognizer }
 import whodarr.classic.organizer.webarchive.WebArchiveSerialFilenameConverter
-import whodarr.classic.organizer.{SerialFileReorganizer, SerialFolderLocal}
+import whodarr.classic.organizer.{ SerialFileReorganizer, SerialFolderLocal }
 import whodarr.classic.util.FileUtility
 
 import java.nio.file.Paths
@@ -32,17 +32,23 @@ def main(): Unit = {
     episodeRecognizer
   )
 
-  val reorganizer = SerialFileReorganizer(serialFolder, serialConverter)
+  val reorganizer = SerialFileReorganizer(serialFolder, serialConverter, None)
 
   val reorganizedFiles = reorganizer.reorganized
-  reorganizedFiles.foreach(tup => println(s"${Paths.get(tup._1).getFileName}\t\t->${Paths.get(tup._2).getFileName}"))
+  reorganizedFiles.foreach(tup =>
+    println(
+      s"${Paths.get(tup._1).getFileName}\t\t->${Paths.get(tup._2).getFileName}"
+    )
+  )
 
   println("Do you want to proceed? y/N> ")
   val proceed = StdIn.readChar().toLower == 'y'
 
   if (proceed) {
-    reorganizedFiles.foreach(tup => {
-      println(s"Moved: ${FileUtility.move(Paths.get(tup._1), Paths.get(tup._2))}")
-    })
+    reorganizedFiles.foreach { tup =>
+      println(
+        s"Moved: ${FileUtility.move(Paths.get(tup._1), Paths.get(tup._2))}"
+      )
+    }
   }
 }
