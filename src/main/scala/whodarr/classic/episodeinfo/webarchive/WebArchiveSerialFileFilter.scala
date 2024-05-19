@@ -14,7 +14,10 @@ class WebArchiveSerialFileFilter extends SerialFileFilter:
   override def episodeBonusFilePredicate(filePath: String): Boolean =
     getEpisodeInfoPart(filePath).endsWith("Bonus")
 
-  override def episodeFileInSerialPredicate(filePath: String, serialNumber: Int): Boolean =
+  override def episodeFileInSerialPredicate(
+      filePath: String,
+      serialNumber: Int
+  ): Boolean =
     getEpisodeInfoPart(filePath).contains("(%03d)".format(serialNumber))
 
   private def getEpisodeInfoPart(filePath: String): String =

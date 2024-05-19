@@ -1,7 +1,7 @@
 package whodarr.classic.util
 
 import java.io.File
-import java.nio.file.{Files, Path, Paths}
+import java.nio.file.{ Files, Path, Paths }
 import scala.collection.JavaConverters.*
 import scala.util.Try
 
@@ -13,7 +13,8 @@ object FileUtility:
 
   def getFilePathsInFolder(folderPath: String): Try[Seq[Path]] =
     Try(
-      Files.list(Paths.get(folderPath))
+      Files
+        .list(Paths.get(folderPath))
         .iterator()
         .asScala
         .toSeq

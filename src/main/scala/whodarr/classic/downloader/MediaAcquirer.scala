@@ -1,6 +1,6 @@
 package whodarr.classic.downloader
 
-import whodarr.classic.episodeinfo.{EpisodeId, EpisodeMedia}
+import whodarr.classic.episodeinfo.{ EpisodeId, EpisodeMedia }
 
 import scala.concurrent.Future
 

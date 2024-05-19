@@ -1,0 +1,17 @@
+name: Scala Format
+
+on: [push]
+
+jobs:
+  scalafmt-lint:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+      # You may pin to the exact commit or the version.
+      # uses: stringbean/scalafmt-action@405c7735de7ae1fd69292b9865d3be6fb8a46ef5
+    - uses: stringbean/scalafmt-action@v3.0.0
+      name: Run Scala Code Format
+      with:
+        # If true then scalafmt will reformat source files instead of checking
+        format-files: false # optional, default is false
