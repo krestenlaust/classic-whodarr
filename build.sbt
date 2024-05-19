@@ -7,7 +7,7 @@ lazy val root = (project in file("."))
     name := "classic-whodarr"
   )
 
-  libraryDependencies ++= Seq(
-    "org.scalatest" %% "scalatest" % "3.2.17" % "test",
-    "com.typesafe" % "config" % "1.4.3",
-  )
+libraryDependencies ++= Seq(
+  "org.scalatest" %% "scalatest" % "3.2.17" % "test",
+  "com.typesafe"   % "config"    % "1.4.3"
+)

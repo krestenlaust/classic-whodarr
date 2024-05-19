@@ -1,6 +1,6 @@
 package whodarr.classic.downloader.qbittorrent
 
-import whodarr.classic.episodeinfo.{EpisodeMedia, SerialFolder}
+import whodarr.classic.episodeinfo.{ EpisodeMedia, SerialFolder }
 
 class SerialFolderTorrent extends SerialFolder:
   override def allFiles: Seq[EpisodeMedia] =
