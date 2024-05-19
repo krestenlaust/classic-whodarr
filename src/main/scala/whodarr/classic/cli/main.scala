@@ -1,6 +1,6 @@
 package whodarr.classic.cli
 
-import whodarr.classic.episodeinfo.webarchive.WebArchiveSerialFileFilter
+import whodarr.classic.episodeinfo.webarchive.{WebArchiveSimpleEpisodeRecognizer, WebArchiveSerialFileFilter}
 import whodarr.classic.organizer.webarchive.WebArchiveSerialFilenameConverter
 import whodarr.classic.organizer.{SerialFileReorganizer, SerialFolderLocal}
 import whodarr.classic.util.FileUtility
@@ -16,15 +16,23 @@ def main(): Unit = {
   println("Enter Serial episode offset> ")
   val serialEpisodeOffset = StdIn.readInt
 
-  println("Enter Serial number> ")
-  val serialNumber = StdIn.readInt
+  println("Enter Story number> ")
+  val storyNumber = StdIn.readInt
 
-  println("Enter Serial designation> ")
-  val designation = StdIn.readLine()
+  val episodeRecognizer = WebArchiveSimpleEpisodeRecognizer(serialEpisodeOffset)
 
-  val serialFolder = new SerialFolderLocal(dirpath, serialNumber, new WebArchiveSerialFileFilter)
-  val serialConverter = new WebArchiveSerialFilenameConverter(designation, serialEpisodeOffset, serialNumber)
-  val reorganizer = SerialFileReorganizer(serialFolder, serialConverter)
+  val serialFolder = SerialFolderLocal(
+    dirpath,
+    storyNumber,
+    WebArchiveSerialFileFilter(),
+    episodeRecognizer
+  )
+
+  val serialConverter = WebArchiveSerialFilenameConverter(
+    episodeRecognizer
+  )
+
+  val reorganizer = SerialFileReorganizer(serialFolder, serialConverter, None)
 
   val reorganizedFiles = reorganizer.reorganized
   reorganizedFiles.foreach(tup => println(s"${Paths.get(tup._1).getFileName}\t\t->${Paths.get(tup._2).getFileName}"))
@@ -34,7 +42,7 @@ def main(): Unit = {
 
   if (proceed) {
     reorganizedFiles.foreach(tup => {
-      println(s"Moved: ${FileUtility.move(tup._1, tup._2)}")
+      println(s"Moved: ${FileUtility.move(Paths.get(tup._1), Paths.get(tup._2))}")
     })
   }
 }
