@@ -8,11 +8,11 @@ class WebArchiveOrganizerIntegrationTests extends FixtureAnyFlatSpec {
 
   override protected def withFixture(test: OneArgTest): Outcome =
     // Unpack fixtures
-    test(os.pwd)
+    test((???, ???))
 
-  override protected type FixtureParam = os.Path
+  override protected type FixtureParam = (os.Path, os.Path)
 
-  it should "have moved serial no. 66" in { rootFolder =>
+  it should "have moved serial no. 66" in { case (rootFolder, organizedRootFolder) =>
     ???
   }
 }
