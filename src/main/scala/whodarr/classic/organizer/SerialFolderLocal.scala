@@ -2,8 +2,7 @@ package whodarr.classic.organizer
 
 import whodarr.classic.episodeinfo.{ EpisodeMedia, EpisodeRecognizer, SerialFileFilter, SerialFolder }
 import whodarr.classic.util.FileUtility
-
-import java.nio.file.Path
+import os._
 
 /** Represents a virtual folder of files related to a particular serial. Filters files for a specific serial, so multiple
   * serials can still be in the same folder.
@@ -16,7 +15,7 @@ import java.nio.file.Path
   *   The filter to use to identify file types.
   */
 class SerialFolderLocal(
-    folderPath: String,
+    folderPath: os.Path,
     storyNumber: Int,
     serialFileFilter: SerialFileFilter,
     episodeRecognizer: EpisodeRecognizer
@@ -56,5 +55,5 @@ class SerialFolderLocal(
     filesToEpisodeMedia(filesFiltered(allFilesUnfiltered, predicate))
 
   // TODO: Handle caught exception.
-  private def allFilesUnfiltered: Seq[Path] =
+  private def allFilesUnfiltered: Seq[os.Path] =
     FileUtility.getFilePathsInFolder(folderPath).get
