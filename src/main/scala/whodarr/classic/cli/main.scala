@@ -11,7 +11,7 @@ import scala.io.StdIn
 @main
 def main(): Unit = {
   println("Enter path to folder> ")
-  val dirpath = StdIn.readLine()
+  val dirpath = os.Path(StdIn.readLine())
 
   println("Enter Serial episode offset> ")
   val serialEpisodeOffset = StdIn.readInt
@@ -37,7 +37,7 @@ def main(): Unit = {
   val reorganizedFiles = reorganizer.reorganized
   reorganizedFiles.foreach(tup =>
     println(
-      s"${Paths.get(tup._1).getFileName}\t\t->${Paths.get(tup._2).getFileName}"
+      s"${os.Path(tup._1).last}\t\t->${os.Path(tup._2).last}"
     )
   )
 
@@ -47,7 +47,7 @@ def main(): Unit = {
   if (proceed) {
     reorganizedFiles.foreach { tup =>
       println(
-        s"Moved: ${FileUtility.move(Paths.get(tup._1), Paths.get(tup._2))}"
+        s"Moved: ${FileUtility.move(os.Path(tup._1), os.Path(tup._2))}"
       )
     }
   }
