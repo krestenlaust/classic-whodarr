@@ -11,7 +11,7 @@ import os.Path
 @main
 def main(): Unit = {
   println("Enter path to folder> ")
-  val dirpath = os.Path(StdIn.readLine())
+  val dirpath = os.Path(StdIn.readLine(), os.pwd)
 
   println("Enter Serial episode offset> ")
   val serialEpisodeOffset = StdIn.readInt
