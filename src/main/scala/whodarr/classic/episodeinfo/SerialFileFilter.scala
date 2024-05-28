@@ -1,5 +1,7 @@
 package whodarr.classic.episodeinfo
 
+import os.Path
+
 /** Provides predicates to identify what the files in a serial folder are.
   */
 trait SerialFileFilter:
@@ -10,7 +12,7 @@ trait SerialFileFilter:
     * @return
     *   Whether the file is a subtitle track.
     */
-  def episodeSubtitleFilePredicate(filePath: String): Boolean
+  def episodeSubtitleFilePredicate(filePath: Path): Boolean
 
   /** Whether the file is an episode video file, (bonus or not).
     *
@@ -19,7 +21,7 @@ trait SerialFileFilter:
     * @return
     *   Whether the file is an episode video file.
     */
-  def episodeVideoFilePredicate(filePath: String): Boolean
+  def episodeVideoFilePredicate(filePath: Path): Boolean
 
   /** Whether the file is related to a bonus episode, either subtitle track or video file.
     *
@@ -28,7 +30,7 @@ trait SerialFileFilter:
     * @return
     *   Whether the file is bonus material, (bonus video or subtitle track).
     */
-  def episodeBonusFilePredicate(filePath: String): Boolean
+  def episodeBonusFilePredicate(filePath: Path): Boolean
 
   /** Whether a file is an episode file, either subtitle track or video file.
     *
@@ -37,7 +39,7 @@ trait SerialFileFilter:
     * @return
     *   Whether the file is an episode-related file.
     */
-  def episodeFilePredicate(filePath: String): Boolean =
+  def episodeFilePredicate(filePath: Path): Boolean =
     episodeVideoFilePredicate(filePath) || episodeSubtitleFilePredicate(
       filePath
     )
@@ -51,4 +53,4 @@ trait SerialFileFilter:
     * @return
     *   Whether the episode file is part of the serial.
     */
-  def episodeFileInSerialPredicate(filePath: String, serialNumber: Int): Boolean
+  def episodeFileInSerialPredicate(filePath: Path, serialNumber: Int): Boolean

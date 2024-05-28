@@ -5,8 +5,8 @@ import whodarr.classic.organizer.webarchive.WebArchiveSerialFilenameConverter
 import whodarr.classic.organizer.{ SerialFileReorganizer, SerialFolderLocal }
 import whodarr.classic.util.FileUtility
 
-import java.nio.file.Paths
 import scala.io.StdIn
+import os.Path
 
 @main
 def main(): Unit = {
@@ -37,7 +37,7 @@ def main(): Unit = {
   val reorganizedFiles = reorganizer.reorganized
   reorganizedFiles.foreach(tup =>
     println(
-      s"${os.Path(tup._1).last}\t\t->${os.Path(tup._2).last}"
+      s"${tup._1.last}\t\t->${tup._2.last}"
     )
   )
 
@@ -47,7 +47,7 @@ def main(): Unit = {
   if (proceed) {
     reorganizedFiles.foreach { tup =>
       println(
-        s"Moved: ${FileUtility.move(os.Path(tup._1), os.Path(tup._2))}"
+        s"Moved: ${FileUtility.move(tup._1, tup._2)}"
       )
     }
   }

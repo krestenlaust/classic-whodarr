@@ -2,7 +2,7 @@ package whodarr.classic.organizer
 
 import whodarr.classic.episodeinfo.{ EpisodeMedia, EpisodeRecognizer, SerialFileFilter, SerialFolder }
 import whodarr.classic.util.FileUtility
-import os._
+import os.Path
 
 /** Represents a virtual folder of files related to a particular serial. Filters files for a specific serial, so multiple
   * serials can still be in the same folder.
@@ -15,7 +15,7 @@ import os._
   *   The filter to use to identify file types.
   */
 class SerialFolderLocal(
-    folderPath: os.Path,
+    folderPath: Path,
     storyNumber: Int,
     serialFileFilter: SerialFileFilter,
     episodeRecognizer: EpisodeRecognizer
@@ -34,12 +34,12 @@ class SerialFolderLocal(
 
   private def filesFiltered(
       files: Seq[Path],
-      predicate: String => Boolean
+      predicate: Path => Boolean
   ): Seq[Path] =
     files.filter(p =>
-      serialFileFilter.episodeFileInSerialPredicate(p.toString, storyNumber) &&
-        serialFileFilter.episodeFilePredicate(p.toString) &&
-        predicate(p.toString)
+      serialFileFilter.episodeFileInSerialPredicate(p, storyNumber) &&
+        serialFileFilter.episodeFilePredicate(p) &&
+        predicate(p)
     )
 
   private def filesToEpisodeMedia(files: Seq[Path]): Seq[EpisodeMedia] =
@@ -50,7 +50,7 @@ class SerialFolderLocal(
     }
 
   private def allMediaFiltered(
-      predicate: String => Boolean
+      predicate: Path => Boolean
   ): Seq[EpisodeMedia] =
     filesToEpisodeMedia(filesFiltered(allFilesUnfiltered, predicate))
 

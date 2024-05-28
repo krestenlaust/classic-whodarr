@@ -1,8 +1,7 @@
 package whodarr.classic.episodeinfo.webarchive
 
-import whodarr.classic.episodeinfo.{ EpisodeId, EpisodeMedia, EpisodeRecognizer }
-
-import java.nio.file.Paths
+import os.Path
+import whodarr.classic.episodeinfo.{ EpisodeId, EpisodeRecognizer }
 
 /** A simple episode recognizer. Depends on getting episode offset in the season.
   * @param episodeOffset
@@ -10,10 +9,7 @@ import java.nio.file.Paths
   */
 class WebArchiveSimpleEpisodeRecognizer(episodeOffset: Int) extends EpisodeRecognizer:
   override def detectFromPath(filePath: String): Option[EpisodeId] =
-    Paths
-      .get(filePath)
-      .getFileName
-      .toString
+    Path(filePath, os.pwd).last
       .split(" - ") match {
       case Array(_, serialDesignation, episodeName) =>
         for {
