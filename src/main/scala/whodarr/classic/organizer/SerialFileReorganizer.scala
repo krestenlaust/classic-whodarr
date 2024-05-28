@@ -17,8 +17,7 @@ class SerialFileReorganizer(
       .map(media =>
         media.path.toString ->
           (dstPath.getOrElse(media.path / os.up) /
-          serialFilenameConverter
-              .convertEpisodeFilename(media.path.last)
-            ).toString
+            serialFilenameConverter
+              .convertEpisodeFilename(media.path.last)).toString
       )
       .toMap
