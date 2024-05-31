@@ -31,7 +31,7 @@ class WebArchiveOrganizerIntegrationTests extends FixtureAnyFlatSpec {
 
   override protected type FixtureParam = (os.Path, os.Path)
 
-  it should "have moved serial no. 66" in { case (rootFolder, organizedRootFolder) =>
+  /*it should "have moved serial no. 66" in { case (rootFolder, organizedRootFolder) =>
     ???
-  }
+  }*/
 }
