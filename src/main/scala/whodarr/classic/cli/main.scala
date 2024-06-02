@@ -4,7 +4,7 @@ import os.Path
 import whodarr.classic.episodeinfo.webarchive.{ WebArchiveSerialFileFilter, WebArchiveSimpleEpisodeRecognizer }
 import whodarr.classic.organizer.webarchive.WebArchiveSerialFilenameConverter
 import whodarr.classic.organizer.{ SerialFileReorganizer, SerialFolderLocal }
-import whodarr.classic.util.MoveFile
+import whodarr.classic.util.MoveFileOperation
 
 import scala.io.StdIn
 
@@ -45,10 +45,10 @@ def main(): Unit = {
   val proceed = StdIn.readChar().toLower == 'y'
 
   if (proceed) {
-    val fileLinker = MoveFile()
+    val fileLinker = MoveFileOperation()
     reorganizedFiles.foreach { tup =>
       println(
-        s"Moved: ${fileLinker.linkFile(tup._1, tup._2)}"
+        s"Moved: ${fileLinker.operation(tup._1, tup._2)}"
       )
     }
   }

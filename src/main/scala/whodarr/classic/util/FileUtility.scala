@@ -1,8 +1,9 @@
 package whodarr.classic.util
 
+import os.Path
+
 import java.io.File
 import scala.util.Try
-import os.Path
 
 object FileUtility:
   def move(srcPath: Path, dstPath: Path): Boolean =
@@ -12,3 +13,6 @@ object FileUtility:
 
   def getFilePathsInFolder(folderPath: Path): Try[IndexedSeq[Path]] =
     Try(os.list(folderPath))
+
+  def massFileOperation[A](fileMappings: Map[A, A], fileLinker: FileOperation[A]): Unit =
+    fileMappings.foreach(mapping => fileLinker.operation(mapping._1, mapping._2))
