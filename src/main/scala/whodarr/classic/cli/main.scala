@@ -45,10 +45,10 @@ def main(): Unit = {
   val proceed = StdIn.readChar().toLower == 'y'
 
   if (proceed) {
-    val fileLinker = MoveFileOperation()
+    val fileMover = MoveFileOperation()
     reorganizedFiles.foreach { tup =>
       println(
-        s"Moved: ${fileLinker.operation(tup._1, tup._2)}"
+        s"Moved: ${fileMover.operation(tup._1, tup._2)}"
       )
     }
   }
