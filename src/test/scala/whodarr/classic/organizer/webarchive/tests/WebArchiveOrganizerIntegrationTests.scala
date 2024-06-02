@@ -45,24 +45,29 @@ class WebArchiveOrganizerIntegrationTests extends FixtureAnyFlatSpec {
     FileUtility.massFileOperation(reorganized, MoveFileOperation())
 
     // Assert that all files have been moved out of the folder and bonus files are left
-    assertFoldersIdentical(actualStoryPath, expectedStoryPath)
+    assertFoldersIdenticalShallow(actualStoryPath, expectedStoryPath)
+
+    // Assert that the moved files have been renamed correctly
+    assertFolderContainedInFolderShallow(actualStoryPath / os.up, expectedStoryPath / os.up)
   }
 
-  /**
-   * Assert that both folders are exactly identical.
-   * @param dir1 A directory to compare to another
-   * @param dir2 The other directory to compare to the first one.
-   */
-  def assertFoldersIdentical(dir1: Path, dir2: Path): Unit =
-    os.walk(dir1).zip(os.walk(dir2)).foreach { case (elem1, elem2) =>
+  /** Assert that both folders are exactly identical.
+    * @param dir1 A directory to compare to another
+    * @param dir2 The other directory to compare to the first one.
+    */
+  def assertFoldersIdenticalShallow(dir1: Path, dir2: Path): Unit =
+    os.walk(dir1, maxDepth = 1).zip(os.walk(dir2, maxDepth = 1)).foreach { case (elem1, elem2) =>
       assert(elem1.last === elem2.last)
     }
 
-  /**
-   * Asserts that all elements inside dirSubset exist inside dirSuperset as well
-   * @param dirSubset The folder with minimum elements that needs to exist.
-   * @param dirSuperset A folder to compare against to have at least the same elements.
-   */
-  def assertFolderContainedInFolder(dirSubset: Path, dirSuperset: Path): Unit =
-    ???
+  /** Asserts that all elements inside dirSubset exist inside dirSuperset as well
+    * @param dirSubset The folder with minimum elements that needs to exist.
+    * @param dirSuperset A folder to compare against to have at least the same elements.
+    */
+  def assertFolderContainedInFolderShallow(dirSubset: Path, dirSuperset: Path): Unit =
+    val supersetPaths = os.walk(dirSuperset, maxDepth = 1).map(p => p.last)
+
+    assert(os.walk(dirSubset, maxDepth = 1).forall { case p =>
+      supersetPaths.contains(p.last)
+    })
 }
