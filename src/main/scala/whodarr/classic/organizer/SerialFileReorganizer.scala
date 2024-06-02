@@ -1,8 +1,8 @@
 package whodarr.classic.organizer
 
-import whodarr.classic.episodeinfo.SerialFolder
-
 import os.Path
+import whodarr.classic.episodeinfo.SerialFolder
+import whodarr.classic.util.LinkFile
 
 class SerialFileReorganizer(
     serialFolder: SerialFolder,
@@ -21,3 +21,6 @@ class SerialFileReorganizer(
               .convertEpisodeFilename(media.path.last))
       )
       .toMap
+
+  def reorganize(fileLinker: LinkFile[Path]): Unit =
+    reorganized.foreach(mapping => fileLinker.linkFile(mapping._1, mapping._2))
