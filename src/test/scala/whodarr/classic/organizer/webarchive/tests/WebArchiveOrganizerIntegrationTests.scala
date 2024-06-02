@@ -4,21 +4,23 @@ import net.lingala.zip4j.ZipFile
 import org.scalatest.Outcome
 import org.scalatest.flatspec.FixtureAnyFlatSpec
 import os.Path
+import whodarr.classic.organizer.StoryReorganizer
+import whodarr.classic.util.{ FileUtility, MoveFileOperation }
 
 import java.nio.file.Paths
 
 class WebArchiveOrganizerIntegrationTests extends FixtureAnyFlatSpec {
-  val resourceRoot: Path = os.Path(java.nio.file.Paths.get(getClass.getResource("/").toURI))
-  val fixtureRoot: Path  = resourceRoot / "fixtures"
-  val fixtureName        = "doctorwho-s10"
-  val fixtureCorrectName = "doctorwho-s10_correct"
+  val resourceRoot: Path  = os.Path(java.nio.file.Paths.get(getClass.getResource("/").toURI))
+  val fixtureRoot: Path   = resourceRoot / "fixtures"
+  val fixtureName         = "doctorwho-s10"
+  val fixtureExpectedName = "doctorwho-s10_correct"
 
   override protected def withFixture(test: OneArgTest): Outcome =
-    val fixtureSource        = fixtureRoot / f"${fixtureName}.zip"
-    val fixtureCorrectSource = fixtureRoot / f"${fixtureCorrectName}.zip"
+    val fixtureSource        = fixtureRoot / f"$fixtureName.zip"
+    val fixtureCorrectSource = fixtureRoot / f"$fixtureExpectedName.zip"
 
-    val fixturePath        = resourceRoot / "tempFixture" / fixtureName
-    val fixtureCorrectPath = resourceRoot / "tempCorrectFixture" / fixtureCorrectName
+    val fixturePath        = resourceRoot / fixtureName
+    val fixtureCorrectPath = resourceRoot / fixtureExpectedName
 
     // Unpack fixtures
     new ZipFile(fixtureSource.toString).extractAll(fixturePath.toString)
@@ -31,7 +33,23 @@ class WebArchiveOrganizerIntegrationTests extends FixtureAnyFlatSpec {
 
   override protected type FixtureParam = (os.Path, os.Path)
 
-  /*it should "have moved serial no. 66" in { case (rootFolder, organizedRootFolder) =>
-    ???
-  }*/
+  it should "move story no. 66" in { case (actualFixture, expectedFixture) =>
+    val actualStoryPath =
+      actualFixture / "doctorwho-s10" / "season 10 doctor 3" / "Doctor Who - S10E02 (066) - Carnival of Monsters - Parts 1-4"
+    val expectedStoryPath =
+      expectedFixture / "doctorwho-s10" / "season 10 doctor 3" / "Doctor Who - S10E02 (066) - Carnival of Monsters - Parts 1-4"
+
+    val reorganizer = StoryReorganizer.reorganizeStory(actualStoryPath, 4, 66)
+    val reorganized = reorganizer.reorganized(Some(actualStoryPath / os.up))
+
+    FileUtility.massFileOperation(reorganized, MoveFileOperation())
+
+    // Assert that all files have been moved out of the folder and bonus files are left
+    assertFoldersIdentical(actualStoryPath, expectedStoryPath)
+  }
+
+  def assertFoldersIdentical(dir1: Path, dir2: Path): Unit =
+    os.walk(dir1).zip(os.walk(dir2)).foreach { case (elem1, elem2) =>
+      assert(elem1.last === elem2.last)
+    }
 }
