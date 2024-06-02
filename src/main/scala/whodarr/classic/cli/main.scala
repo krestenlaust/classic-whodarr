@@ -1,9 +1,7 @@
 package whodarr.classic.cli
 
 import os.Path
-import whodarr.classic.episodeinfo.webarchive.{ WebArchiveSerialFileFilter, WebArchiveSimpleEpisodeRecognizer }
-import whodarr.classic.organizer.webarchive.WebArchiveSerialFilenameConverter
-import whodarr.classic.organizer.{ SerialFileReorganizer, SerialFolderLocal }
+import whodarr.classic.organizer.StoryReorganizer
 import whodarr.classic.util.MoveFileOperation
 
 import scala.io.StdIn
@@ -19,20 +17,7 @@ def main(): Unit = {
   println("Enter Story number> ")
   val storyNumber = StdIn.readInt
 
-  val episodeRecognizer = WebArchiveSimpleEpisodeRecognizer(serialEpisodeOffset)
-
-  val serialFolder = SerialFolderLocal(
-    dirpath,
-    storyNumber,
-    WebArchiveSerialFileFilter(),
-    episodeRecognizer
-  )
-
-  val serialConverter = WebArchiveSerialFilenameConverter(
-    episodeRecognizer
-  )
-
-  val reorganizer = SerialFileReorganizer(serialFolder, serialConverter)
+  val reorganizer = StoryReorganizer.reorganizeStory(dirpath, serialEpisodeOffset, storyNumber)
 
   val reorganizedFiles = reorganizer.reorganized(None)
   reorganizedFiles.foreach(tup =>
