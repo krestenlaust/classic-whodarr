@@ -32,9 +32,9 @@ def main(): Unit = {
     episodeRecognizer
   )
 
-  val reorganizer = SerialFileReorganizer(serialFolder, serialConverter, None)
+  val reorganizer = SerialFileReorganizer(serialFolder, serialConverter)
 
-  val reorganizedFiles = reorganizer.reorganized
+  val reorganizedFiles = reorganizer.reorganized(None)
   reorganizedFiles.foreach(tup =>
     println(
       s"${tup._1.last}\t\t->${tup._2.last}"
