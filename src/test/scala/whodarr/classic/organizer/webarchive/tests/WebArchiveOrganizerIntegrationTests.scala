@@ -66,7 +66,7 @@ class WebArchiveOrganizerIntegrationTests extends FixtureAnyFlatSpec {
     */
   def assertFolderContainedInFolderShallow(dirSubset: Path, dirSuperset: Path): Unit =
     val supersetFilenames = os.walk(dirSuperset, maxDepth = 1).map(p => p.last)
-    val subsetFilenames = os.walk(dirSubset, maxDepth = 1).map(p => p.last)
+    val subsetFilenames   = os.walk(dirSubset, maxDepth = 1).map(p => p.last)
 
     subsetFilenames.foreach(name => assert(supersetFilenames.contains(name)))
 }
