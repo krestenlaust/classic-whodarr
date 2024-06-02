@@ -65,7 +65,8 @@ class WebArchiveOrganizerIntegrationTests extends FixtureAnyFlatSpec {
     * @param dirSuperset A folder to compare against to have at least the same elements.
     */
   def assertFolderContainedInFolderShallow(dirSubset: Path, dirSuperset: Path): Unit =
-    val supersetPaths = os.walk(dirSuperset, maxDepth = 1).map(p => p.last)
+    val supersetFilenames = os.walk(dirSuperset, maxDepth = 1).map(p => p.last)
+    val subsetFilenames = os.walk(dirSubset, maxDepth = 1).map(p => p.last)
 
-    assert(os.walk(dirSubset, maxDepth = 1).forall(p => supersetPaths.contains(p.last)))
+    subsetFilenames.foreach(name => assert(supersetFilenames.contains(name)))
 }
