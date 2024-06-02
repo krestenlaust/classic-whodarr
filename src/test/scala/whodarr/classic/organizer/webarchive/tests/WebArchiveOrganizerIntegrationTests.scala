@@ -48,8 +48,21 @@ class WebArchiveOrganizerIntegrationTests extends FixtureAnyFlatSpec {
     assertFoldersIdentical(actualStoryPath, expectedStoryPath)
   }
 
+  /**
+   * Assert that both folders are exactly identical.
+   * @param dir1 A directory to compare to another
+   * @param dir2 The other directory to compare to the first one.
+   */
   def assertFoldersIdentical(dir1: Path, dir2: Path): Unit =
     os.walk(dir1).zip(os.walk(dir2)).foreach { case (elem1, elem2) =>
       assert(elem1.last === elem2.last)
     }
+
+  /**
+   * Asserts that all elements inside dirSubset exist inside dirSuperset as well
+   * @param dirSubset The folder with minimum elements that needs to exist.
+   * @param dirSuperset A folder to compare against to have at least the same elements.
+   */
+  def assertFolderContainedInFolder(dirSubset: Path, dirSuperset: Path): Unit =
+    ???
 }
