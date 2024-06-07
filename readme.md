@@ -1,4 +1,5 @@
 # Classic Whodarr
+[![codecov](https://codecov.io/gh/krestenlaust/classic-whodarr/branch/main/graph/badge.svg)](https://codecov.io/gh/krestenlaust/classic-whodarr)
 
 (Or more accurately, whonarr*)
 
