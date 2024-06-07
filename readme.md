@@ -1,6 +1,6 @@
 # Classic Whodarr
-
 [![codecov](https://codecov.io/gh/krestenlaust/classic-whodarr/branch/main/graph/badge.svg)](https://codecov.io/gh/krestenlaust/classic-whodarr)
+
 (Or more accurately, whonarr*)
 
 Automatically download Classic Doctor Who (only from official sources) and reorganize them into a format Plex/Jellyfin can understand.
