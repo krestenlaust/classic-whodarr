@@ -10,26 +10,29 @@ import whodarr.classic.util.{ FileUtility, MoveFileOperation }
 import java.nio.file.Paths
 
 class WebArchiveOrganizerIntegrationTests extends FixtureAnyFlatSpec {
-  val resourceRoot: Path  = os.Path(java.nio.file.Paths.get(getClass.getResource("/").toURI))
-  val fixtureRoot: Path   = resourceRoot / "fixtures"
-  val fixtureName         = "doctorwho-s10"
-  val fixtureExpectedName = "doctorwho-s10_correct"
+  val resourceRoot: Path     = os.Path(java.nio.file.Paths.get(getClass.getResource("/").toURI))
+  val fixtureRoot: Path      = resourceRoot / "fixtures"
+  val resourceTempRoot: Path = resourceRoot / "temp"
+  val fixtureName            = "doctorwho-s10"
+  val fixtureExpectedName    = "doctorwho-s10_correct"
 
   override protected def withFixture(test: OneArgTest): Outcome =
     val fixtureSource        = fixtureRoot / f"$fixtureName.zip"
     val fixtureCorrectSource = fixtureRoot / f"$fixtureExpectedName.zip"
 
-    val fixturePath        = resourceRoot / fixtureName
-    val fixtureCorrectPath = resourceRoot / fixtureExpectedName
+    val fixturePath        = resourceTempRoot / fixtureName
+    val fixtureCorrectPath = resourceTempRoot / fixtureExpectedName
+
+    // Make sure temp is removed
+    os.remove.all(resourceTempRoot)
+    os.makeDir(resourceTempRoot)
 
     // Unpack fixtures
     new ZipFile(fixtureSource.toString).extractAll(fixturePath.toString)
     new ZipFile(fixtureCorrectSource.toString).extractAll(fixtureCorrectPath.toString)
 
     try test((fixturePath, fixtureCorrectPath))
-    finally
-      os.remove.all(fixturePath)
-      os.remove.all(fixtureCorrectPath)
+    finally os.remove.all(resourceTempRoot)
 
   override protected type FixtureParam = (os.Path, os.Path)
 
