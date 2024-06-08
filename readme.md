@@ -1,5 +1,6 @@
 # Classic Whodarr
 [![codecov](https://codecov.io/gh/krestenlaust/classic-whodarr/branch/main/graph/badge.svg)](https://codecov.io/gh/krestenlaust/classic-whodarr)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fkrestenlaust%2Fclassic-whodarr.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fkrestenlaust%2Fclassic-whodarr?ref=badge_shield)
 
 (Or more accurately, whonarr*)
 
@@ -32,3 +33,7 @@ This module refactors the downloaded files into a new folder structure and renam
  - Watcher
 
 Watcher-module interacts with Plex/Jellyfin to tell the watching progress. It notifies the Downloader-module once an episode has been seen, to check if new ones should get downloaded.
+
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fkrestenlaust%2Fclassic-whodarr.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fkrestenlaust%2Fclassic-whodarr?ref=badge_large)
