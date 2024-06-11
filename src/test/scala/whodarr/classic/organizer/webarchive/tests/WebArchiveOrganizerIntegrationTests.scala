@@ -49,6 +49,20 @@ class WebArchiveOrganizerIntegrationTests extends FixtureAnyFlatSpec {
     assertStoryMoved(actualFixture, expectedFixture, storyFolderName)
   }
 
+  it should "move all stories in season 10" in { case (actualFixture, expectedFixture) =>
+    val actualSeasonPath   = actualFixture / "doctorwho-s10" / "season 10 doctor 3"
+    val expectedSeasonPath = expectedFixture / "doctorwho-s10" / "season 10 doctor 3"
+
+    // Perform magic...
+
+    // Assert
+    assertStoryMoved(actualFixture, expectedFixture, "Doctor Who - S10E01 (065) - The Three Doctors - Parts 1-4")
+    assertStoryMoved(actualFixture, expectedFixture, "Doctor Who - S10E02 (066) - Carnival of Monsters - Parts 1-4")
+    assertStoryMoved(actualFixture, expectedFixture, "Doctor Who - S10E03 (067) - Frontier in Space - Parts 1-6")
+    assertStoryMoved(actualFixture, expectedFixture, "Doctor Who - S10E04 (068) - Planet of the Daleks - Parts 1-6")
+    assertStoryMoved(actualFixture, expectedFixture, "Doctor Who - S10E05 (069) - The Green Death - Parts 1-6")
+  }
+
   def assertStoryMoved(actualFixture: Path, expectedFixture: Path, storyFolderName: String): Unit =
     val actualStoryPath   = actualFixture / "doctorwho-s10" / "season 10 doctor 3" / storyFolderName
     val expectedStoryPath = expectedFixture / "doctorwho-s10" / "season 10 doctor 3" / storyFolderName
