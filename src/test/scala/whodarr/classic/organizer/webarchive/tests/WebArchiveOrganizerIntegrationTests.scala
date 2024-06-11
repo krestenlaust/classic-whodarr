@@ -46,12 +46,18 @@ class WebArchiveOrganizerIntegrationTests extends FixtureAnyFlatSpec {
 
     FileUtility.massFileOperation(reorganized, MoveFileOperation())
 
+    assertStoryMoved(actualFixture, expectedFixture, storyFolderName)
+  }
+
+  def assertStoryMoved(actualFixture: Path, expectedFixture: Path, storyFolderName: String): Unit =
+    val actualStoryPath   = actualFixture / "doctorwho-s10" / "season 10 doctor 3" / storyFolderName
+    val expectedStoryPath = expectedFixture / "doctorwho-s10" / "season 10 doctor 3" / storyFolderName
+
     // Assert that all files have been moved out of the folder and bonus files are left
     assertFoldersIdenticalShallow(actualStoryPath, expectedStoryPath)
 
     // Assert that the moved files have been renamed correctly
     assertFolderContainedInFolderShallow(actualStoryPath / os.up, expectedStoryPath / os.up)
-  }
 
   /** Assert that both folders are exactly identical.
     * @param dir1 A directory to compare to another
