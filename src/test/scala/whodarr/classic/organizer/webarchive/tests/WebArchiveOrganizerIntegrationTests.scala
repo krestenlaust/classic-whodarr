@@ -37,10 +37,9 @@ class WebArchiveOrganizerIntegrationTests extends FixtureAnyFlatSpec {
   override protected type FixtureParam = (os.Path, os.Path)
 
   it should "move story no. 66" in { case (actualFixture, expectedFixture) =>
-    val actualStoryPath =
-      actualFixture / "doctorwho-s10" / "season 10 doctor 3" / "Doctor Who - S10E02 (066) - Carnival of Monsters - Parts 1-4"
-    val expectedStoryPath =
-      expectedFixture / "doctorwho-s10" / "season 10 doctor 3" / "Doctor Who - S10E02 (066) - Carnival of Monsters - Parts 1-4"
+    val storyFolderName   = "Doctor Who - S10E02 (066) - Carnival of Monsters - Parts 1-4"
+    val actualStoryPath   = actualFixture / "doctorwho-s10" / "season 10 doctor 3" / storyFolderName
+    val expectedStoryPath = expectedFixture / "doctorwho-s10" / "season 10 doctor 3" / storyFolderName
 
     val reorganizer = StoryReorganizer.reorganizeStory(actualStoryPath, 4, 66)
     val reorganized = reorganizer.reorganized(Some(actualStoryPath / os.up))
