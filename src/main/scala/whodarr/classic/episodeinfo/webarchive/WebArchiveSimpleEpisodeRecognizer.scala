@@ -20,6 +20,6 @@ class WebArchiveSimpleEpisodeRecognizer(episodeOffset: Int) extends Recognizer[E
               episodeName.lastIndexOf(")")
             )
             .toIntOption
-        } yield EpisodeId(season, episode + episodeOffset)
+        } yield EpisodeId(SeasonId(season), episode + episodeOffset)
       case _ => None
     }
