@@ -1,6 +1,6 @@
 package whodarr.classic.organizer
 
-import whodarr.classic.episodeinfo.{ EpisodeMedia, EpisodeRecognizer, SerialFileFilter, SerialFolder }
+import whodarr.classic.episodeinfo.{ EpisodeId, EpisodeMedia, Recognizer, SerialFileFilter, SerialFolder }
 import whodarr.classic.util.FileUtility
 import os.Path
 
@@ -18,7 +18,7 @@ class SerialFolderLocal(
     folderPath: Path,
     storyNumber: Int,
     serialFileFilter: SerialFileFilter,
-    episodeRecognizer: EpisodeRecognizer
+    episodeRecognizer: Recognizer[EpisodeId]
 ) extends SerialFolder:
   def allFiles: Seq[EpisodeMedia] =
     allMediaFiltered(_ => true)
