@@ -9,7 +9,7 @@ import whodarr.classic.util.{ FileUtility, MoveFileOperation }
 
 import java.nio.file.Paths
 
-class WebArchiveOrganizerIntegrationTests extends FixtureAnyFlatSpec {
+class OrganizerIntegrationTests extends FixtureAnyFlatSpec {
   val resourceRoot: Path     = os.Path(java.nio.file.Paths.get(getClass.getResource("/").toURI))
   val fixtureRoot: Path      = resourceRoot / "fixtures"
   val resourceTempRoot: Path = resourceRoot / "temp"

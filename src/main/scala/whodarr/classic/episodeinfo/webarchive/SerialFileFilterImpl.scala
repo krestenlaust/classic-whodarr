@@ -3,7 +3,7 @@ package whodarr.classic.episodeinfo.webarchive
 import whodarr.classic.episodeinfo.SerialFileFilter
 import os.Path
 
-class WebArchiveSerialFileFilter extends SerialFileFilter:
+class SerialFileFilterImpl extends SerialFileFilter:
   override def episodeSubtitleFilePredicate(filePath: Path): Boolean =
     getFileExtension(filePath).exists(ext => ext.equalsIgnoreCase("vtt") || ext.equalsIgnoreCase("txt"))
 

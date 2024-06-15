@@ -7,7 +7,7 @@ import whodarr.classic.episodeinfo.{ EpisodeId, Recognizer, SeasonId }
   * @param episodeOffset
   *   The offset (0-indexed) of the first episode in the serial.
   */
-class WebArchiveEpisodeRecognizerSimple(episodeOffset: Int) extends Recognizer[EpisodeId]:
+class EpisodeRecognizerImplSimple(episodeOffset: Int) extends Recognizer[EpisodeId]:
   override def detectFromPath(filePath: String): Option[EpisodeId] =
     Path(filePath, os.pwd).last
       .split(" - ") match {
