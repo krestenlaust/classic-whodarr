@@ -1,9 +1,9 @@
 package whodarr.classic.episodeinfo.webarchive
 
-import whodarr.classic.episodeinfo.SerialFileFilter
+import whodarr.classic.episodeinfo.EpisodeFileFilter
 import os.Path
 
-class SerialFileFilterImpl extends SerialFileFilter:
+class EpisodeFileFilterImpl extends EpisodeFileFilter:
   override def episodeSubtitleFilePredicate(filePath: Path): Boolean =
     getFileExtension(filePath).exists(ext => ext.equalsIgnoreCase("vtt") || ext.equalsIgnoreCase("txt"))
 

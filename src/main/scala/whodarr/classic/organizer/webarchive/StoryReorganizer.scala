@@ -2,7 +2,7 @@ package whodarr.classic.organizer.webarchive
 
 import os.Path
 import whodarr.classic.episodeinfo.SerialFolderLocal
-import whodarr.classic.episodeinfo.webarchive.{ EpisodeRecognizerImplSimple, SerialFileFilterImpl }
+import whodarr.classic.episodeinfo.webarchive.{ EpisodeFileFilterImpl, EpisodeRecognizerImplSimple }
 import whodarr.classic.organizer.SerialFileReorganizer
 
 case object StoryReorganizer:
@@ -12,7 +12,7 @@ case object StoryReorganizer:
     val serialFolder = SerialFolderLocal(
       src,
       storyNumber,
-      SerialFileFilterImpl(),
+      EpisodeFileFilterImpl(),
       episodeRecognizer
     )
 

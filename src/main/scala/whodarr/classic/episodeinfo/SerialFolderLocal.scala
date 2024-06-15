@@ -10,34 +10,34 @@ import whodarr.classic.util.FileUtility
   *   The path to the folder of serial episodes.
   * @param storyNumber
   *   The story number of a serial.
-  * @param serialFileFilter
+  * @param episodeFileFilter
   *   The filter to use to identify file types.
   */
 class SerialFolderLocal(
     folderPath: Path,
     storyNumber: Int,
-    serialFileFilter: SerialFileFilter,
+    episodeFileFilter: EpisodeFileFilter,
     episodeRecognizer: Recognizer[EpisodeId]
 ) extends SerialFolder:
   def allFiles: Seq[EpisodeMedia] =
     allMediaFiltered(_ => true)
 
   def allNonBonusFiles: Seq[EpisodeMedia] =
-    allMediaFiltered(p => !serialFileFilter.episodeBonusFilePredicate(p))
+    allMediaFiltered(p => !episodeFileFilter.episodeBonusFilePredicate(p))
 
   def allSubtitleFiles: Seq[EpisodeMedia] =
-    allMediaFiltered(serialFileFilter.episodeSubtitleFilePredicate)
+    allMediaFiltered(episodeFileFilter.episodeSubtitleFilePredicate)
 
   def allVideoFiles: Seq[EpisodeMedia] =
-    allMediaFiltered(serialFileFilter.episodeVideoFilePredicate)
+    allMediaFiltered(episodeFileFilter.episodeVideoFilePredicate)
 
   private def filesFiltered(
       files: Seq[Path],
       predicate: Path => Boolean
   ): Seq[Path] =
     files.filter(p =>
-      serialFileFilter.episodeFileInSerialPredicate(p, storyNumber) &&
-        serialFileFilter.episodeFilePredicate(p) &&
+      episodeFileFilter.episodeFileInSerialPredicate(p, storyNumber) &&
+        episodeFileFilter.episodeFilePredicate(p) &&
         predicate(p)
     )
 
