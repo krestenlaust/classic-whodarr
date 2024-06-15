@@ -4,7 +4,7 @@ import os.Path
 
 /** Provides predicates to identify what the files in a serial folder are.
   */
-trait SerialFileFilter:
+trait EpisodeFileFilter:
   /** Whether the file is a subtitle track file, (bonus or not).
     *
     * @param filePath
