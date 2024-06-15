@@ -2,13 +2,13 @@ package whodarr.classic.episodeinfo.webarchive.tests
 
 import org.scalatest.flatspec.AnyFlatSpec
 import whodarr.classic.episodeinfo.{ EpisodeId, EpisodeRecognizer }
-import whodarr.classic.episodeinfo.webarchive.WebArchiveSimpleEpisodeRecognizer
+import whodarr.classic.episodeinfo.webarchive.WebArchiveEpisodeRecognizerSimple
 
 class WebArchiveEpisodeRecognizer extends AnyFlatSpec {
   "Simple Recognizer" should "recognize simple episode name" in {
     // Arrange
     val recognizer: EpisodeRecognizer =
-      WebArchiveSimpleEpisodeRecognizer(10) // Offset by 10 episodes
+      WebArchiveEpisodeRecognizerSimple(10) // Offset by 10 episodes
 
     // Act / Assert
     assert(
@@ -26,7 +26,7 @@ class WebArchiveEpisodeRecognizer extends AnyFlatSpec {
   }
 
   "Simple Recognizer" should "recognize episode names in long paths" in {
-    val recognizer: EpisodeRecognizer = WebArchiveSimpleEpisodeRecognizer(0)
+    val recognizer: EpisodeRecognizer = WebArchiveEpisodeRecognizerSimple(0)
     val fileSep: String               = System.getProperty("file.separator")
 
     val testPath =
