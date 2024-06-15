@@ -1,8 +1,7 @@
-package whodarr.classic.organizer
+package whodarr.classic.episodeinfo
 
-import whodarr.classic.episodeinfo.{ EpisodeId, EpisodeMedia, Recognizer, SerialFileFilter, SerialFolder }
-import whodarr.classic.util.FileUtility
 import os.Path
+import whodarr.classic.util.FileUtility
 
 /** Represents a virtual folder of files related to a particular serial. Filters files for a specific serial, so multiple
   * serials can still be in the same folder.
