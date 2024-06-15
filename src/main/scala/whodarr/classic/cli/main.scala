@@ -1,7 +1,7 @@
 package whodarr.classic.cli
 
 import os.Path
-import whodarr.classic.organizer.StoryReorganizer
+import whodarr.classic.organizer.webarchive.StoryReorganizer
 import whodarr.classic.util.MoveFileOperation
 
 import scala.io.StdIn

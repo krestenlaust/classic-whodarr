@@ -4,7 +4,7 @@ import net.lingala.zip4j.ZipFile
 import org.scalatest.Outcome
 import org.scalatest.flatspec.FixtureAnyFlatSpec
 import os.Path
-import whodarr.classic.organizer.StoryReorganizer
+import whodarr.classic.organizer.webarchive.StoryReorganizer
 import whodarr.classic.util.{ FileUtility, MoveFileOperation }
 
 import java.nio.file.Paths
