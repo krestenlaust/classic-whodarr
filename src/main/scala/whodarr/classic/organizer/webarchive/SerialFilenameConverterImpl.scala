@@ -3,7 +3,7 @@ package whodarr.classic.organizer.webarchive
 import whodarr.classic.episodeinfo.{ EpisodeId, Recognizer }
 import whodarr.classic.organizer.{ SerialFilenameConverter, SerialFilenameSanitizer }
 
-class WebArchiveSerialFilenameConverter(episodeRecognizer: Recognizer[EpisodeId])
+class SerialFilenameConverterImpl(episodeRecognizer: Recognizer[EpisodeId])
     extends SerialFilenameConverter,
       SerialFilenameSanitizer:
 

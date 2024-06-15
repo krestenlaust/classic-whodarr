@@ -2,7 +2,7 @@ package whodarr.classic.organizer
 
 import os.Path
 import whodarr.classic.episodeinfo.webarchive.{ EpisodeRecognizerImplSimple, SerialFileFilterImpl }
-import whodarr.classic.organizer.webarchive.WebArchiveSerialFilenameConverter
+import whodarr.classic.organizer.webarchive.SerialFilenameConverterImpl
 
 case object StoryReorganizer:
   def reorganizeStory(src: Path, episodeOffset: Int, storyNumber: Int): SerialFileReorganizer =
@@ -15,7 +15,7 @@ case object StoryReorganizer:
       episodeRecognizer
     )
 
-    val serialConverter = WebArchiveSerialFilenameConverter(
+    val serialConverter = SerialFilenameConverterImpl(
       episodeRecognizer
     )
 
