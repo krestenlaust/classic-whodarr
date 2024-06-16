@@ -55,4 +55,4 @@ class SerialFolderLocal(
 
   // TODO: Handle caught exception.
   private def allFilesUnfiltered: Seq[os.Path] =
-    FileUtility.getFilePathsInFolder(folderPath).get
+    FileUtility.filesInFolder(folderPath).get
