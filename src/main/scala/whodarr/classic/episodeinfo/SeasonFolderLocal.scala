@@ -1,4 +1,10 @@
 package whodarr.classic.episodeinfo
 
-class SeasonFolderLocal extends SeasonFolder:
-  override def serials: Seq[SerialFolderLocal] = ???
+import os.Path
+
+class SeasonFolderLocal(
+    folderPath: Path,
+    episodeRecognizer: Recognizer[EpisodeId]
+) extends SeasonFolder:
+  override def serials: Seq[SerialFolderLocal] =
+    ???
