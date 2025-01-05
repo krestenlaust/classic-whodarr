@@ -1,13 +1,13 @@
 package whodarr.classic.episodeinfo.webarchive
 
 import os.Path
-import whodarr.classic.episodeinfo.{ EpisodeId, EpisodeRecognizer }
+import whodarr.classic.episodeinfo.{ EpisodeId, Recognizer, SeasonId }
 
 /** A simple episode recognizer. Depends on getting episode offset in the season.
   * @param episodeOffset
   *   The offset (0-indexed) of the first episode in the serial.
   */
-class WebArchiveSimpleEpisodeRecognizer(episodeOffset: Int) extends EpisodeRecognizer:
+class EpisodeRecognizerImplSimple(episodeOffset: Int) extends Recognizer[EpisodeId]:
   override def detectFromPath(filePath: String): Option[EpisodeId] =
     Path(filePath, os.pwd).last
       .split(" - ") match {
@@ -20,6 +20,6 @@ class WebArchiveSimpleEpisodeRecognizer(episodeOffset: Int) extends EpisodeRecog
               episodeName.lastIndexOf(")")
             )
             .toIntOption
-        } yield EpisodeId(season, episode + episodeOffset)
+        } yield EpisodeId(SeasonId(season), episode + episodeOffset)
       case _ => None
     }

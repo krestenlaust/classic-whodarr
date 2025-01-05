@@ -11,7 +11,7 @@ object FileUtility:
     val targetFile = File(dstPath.toString)
     fileToMove.renameTo(targetFile)
 
-  def getFilePathsInFolder(folderPath: Path): Try[IndexedSeq[Path]] =
+  def filesInFolder(folderPath: Path): Try[IndexedSeq[Path]] =
     Try(os.list(folderPath))
 
   def massFileOperation[A](fileMappings: Map[A, A], fileLinker: FileOperation[A]): Unit =
