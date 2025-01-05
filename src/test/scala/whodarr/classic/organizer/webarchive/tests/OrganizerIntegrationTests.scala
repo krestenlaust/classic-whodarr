@@ -36,7 +36,24 @@ class OrganizerIntegrationTests extends FixtureAnyFlatSpec {
 
   override protected type FixtureParam = (os.Path, os.Path)
 
-  it should "move story no. 66" in { case (actualFixture, expectedFixture) =>
+  it should "move first story (no. 65)" in { case (actualFixture, expectedFixture) =>
+    val storyFolderName = "Doctor Who - S10E01 (065) - The Three Doctors - Parts 1-4"
+    val actualStoryPath = actualFixture / "doctorwho-s10" / "season 10 doctor 3" / storyFolderName
+    val episodeOffset = 0
+    val storyNumber = 65
+
+    // Perform calculations to find new file paths
+    val reorganizer = StoryReorganizer.reorganizeStory(actualStoryPath, episodeOffset, storyNumber)
+    val reorganized = reorganizer.reorganized(Some(actualStoryPath / os.up))
+
+    // Move files around the new paths
+    FileUtility.massFileOperation(reorganized, MoveFileOperation())
+
+    // Assert that the files have been moved correctly
+    assertStoryMoved(actualFixture, expectedFixture, storyFolderName)
+  }
+
+  it should "move middle story (no. 66)" in { case (actualFixture, expectedFixture) =>
     val storyFolderName = "Doctor Who - S10E02 (066) - Carnival of Monsters - Parts 1-4"
     val actualStoryPath = actualFixture / "doctorwho-s10" / "season 10 doctor 3" / storyFolderName
     val episodeOffset   = 4
@@ -47,6 +64,23 @@ class OrganizerIntegrationTests extends FixtureAnyFlatSpec {
     val reorganized = reorganizer.reorganized(Some(actualStoryPath / os.up))
 
     // Move files around the new paths
+    FileUtility.massFileOperation(reorganized, MoveFileOperation())
+
+    // Assert that the files have been moved correctly
+    assertStoryMoved(actualFixture, expectedFixture, storyFolderName)
+  }
+
+  it should "move last story (no. 69)" in { case (actualFixture, expectedFixture) =>
+    val storyFolderName = "Doctor Who - S10E05 (069) - The Green Death - Parts 1-6"
+    val actualStoryPath = actualFixture / "doctorwho-s10" / "season 10 doctor 3" / storyFolderName
+    val episodeOffset   = 20
+    val storyNumber     = 69
+
+    // Perform calculations to find new file paths
+    val reorganizer = StoryReorganizer.reorganizeStory(actualStoryPath, episodeOffset, storyNumber)
+    val reorganized = reorganizer.reorganized(Some(actualStoryPath / os.up))
+
+    // Move files around to the new paths
     FileUtility.massFileOperation(reorganized, MoveFileOperation())
 
     // Assert that the files have been moved correctly
