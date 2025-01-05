@@ -36,25 +36,83 @@ class OrganizerIntegrationTests extends FixtureAnyFlatSpec {
 
   override protected type FixtureParam = (os.Path, os.Path)
 
-  it should "move story no. 66" in { case (actualFixture, expectedFixture) =>
-    val storyFolderName   = "Doctor Who - S10E02 (066) - Carnival of Monsters - Parts 1-4"
-    val actualStoryPath   = actualFixture / "doctorwho-s10" / "season 10 doctor 3" / storyFolderName
-    val expectedStoryPath = expectedFixture / "doctorwho-s10" / "season 10 doctor 3" / storyFolderName
+  it should "move first story (no. 65)" in { case (actualFixture, expectedFixture) =>
+    val storyFolderName = "Doctor Who - S10E01 (065) - The Three Doctors - Parts 1-4"
+    val actualStoryPath = actualFixture / "doctorwho-s10" / "season 10 doctor 3" / storyFolderName
+    val episodeOffset   = 0
+    val storyNumber     = 65
 
-    val reorganizer = StoryReorganizer.reorganizeStory(actualStoryPath, 4, 66)
+    // Perform calculations to find new file paths
+    val reorganizer = StoryReorganizer.reorganizeStory(actualStoryPath, episodeOffset, storyNumber)
     val reorganized = reorganizer.reorganized(Some(actualStoryPath / os.up))
 
+    // Move files around the new paths
     FileUtility.massFileOperation(reorganized, MoveFileOperation())
 
+    // Assert that the files have been moved correctly
     assertStoryMoved(actualFixture, expectedFixture, storyFolderName)
   }
 
-  /*
+  it should "move middle story (no. 66)" in { case (actualFixture, expectedFixture) =>
+    val storyFolderName = "Doctor Who - S10E02 (066) - Carnival of Monsters - Parts 1-4"
+    val actualStoryPath = actualFixture / "doctorwho-s10" / "season 10 doctor 3" / storyFolderName
+    val episodeOffset   = 4
+    val storyNumber     = 66
+
+    // Perform calculations to find new file paths
+    val reorganizer = StoryReorganizer.reorganizeStory(actualStoryPath, episodeOffset, storyNumber)
+    val reorganized = reorganizer.reorganized(Some(actualStoryPath / os.up))
+
+    // Move files around the new paths
+    FileUtility.massFileOperation(reorganized, MoveFileOperation())
+
+    // Assert that the files have been moved correctly
+    assertStoryMoved(actualFixture, expectedFixture, storyFolderName)
+  }
+
+  it should "move last story (no. 69)" in { case (actualFixture, expectedFixture) =>
+    val storyFolderName = "Doctor Who - S10E05 (069) - The Green Death - Parts 1-6"
+    val actualStoryPath = actualFixture / "doctorwho-s10" / "season 10 doctor 3" / storyFolderName
+    val episodeOffset   = 20
+    val storyNumber     = 69
+
+    // Perform calculations to find new file paths
+    val reorganizer = StoryReorganizer.reorganizeStory(actualStoryPath, episodeOffset, storyNumber)
+    val reorganized = reorganizer.reorganized(Some(actualStoryPath / os.up))
+
+    // Move files around to the new paths
+    FileUtility.massFileOperation(reorganized, MoveFileOperation())
+
+    // Assert that the files have been moved correctly
+    assertStoryMoved(actualFixture, expectedFixture, storyFolderName)
+  }
+
+  def moveStory(actualStoryPath: Path, episodeOffset: Int, storyNumber: Int): Unit =
+    // Perform calculations to find new file paths
+    val reorganizer = StoryReorganizer.reorganizeStory(actualStoryPath, episodeOffset, storyNumber)
+    val reorganized = reorganizer.reorganized(Some(actualStoryPath / os.up))
+
+    // Move files around to the new paths
+    FileUtility.massFileOperation(reorganized, MoveFileOperation())
+
+  def getPartCountOfStory(storyName: String): Option[Int] =
+    storyName.split('-').lastOption.flatMap(partsString => partsString.trim.replace("Parts 1-", "").toIntOption)
+
   it should "move all stories in season 10" in { case (actualFixture, expectedFixture) =>
-    val actualSeasonPath   = actualFixture / "doctorwho-s10" / "season 10 doctor 3"
-    val expectedSeasonPath = expectedFixture / "doctorwho-s10" / "season 10 doctor 3"
+    val actualSeasonPath = actualFixture / "doctorwho-s10" / "season 10 doctor 3"
 
     // Perform magic...
+    var storyNumber   = 65
+    var episodeOffset = 0
+    os.walk(actualSeasonPath, maxDepth = 1).foreach { actualStoryPath =>
+      val reorganizer = StoryReorganizer.reorganizeStory(actualStoryPath, episodeOffset, storyNumber)
+      val reorganized = reorganizer.reorganized(Some(actualStoryPath / os.up))
+      FileUtility.massFileOperation(reorganized, MoveFileOperation())
+
+      val partCount = getPartCountOfStory(actualStoryPath.last)
+      episodeOffset = episodeOffset + partCount.get
+      storyNumber = storyNumber + 1
+    }
 
     // Assert
     assertStoryMoved(actualFixture, expectedFixture, "Doctor Who - S10E01 (065) - The Three Doctors - Parts 1-4")
@@ -62,7 +120,7 @@ class OrganizerIntegrationTests extends FixtureAnyFlatSpec {
     assertStoryMoved(actualFixture, expectedFixture, "Doctor Who - S10E03 (067) - Frontier in Space - Parts 1-6")
     assertStoryMoved(actualFixture, expectedFixture, "Doctor Who - S10E04 (068) - Planet of the Daleks - Parts 1-6")
     assertStoryMoved(actualFixture, expectedFixture, "Doctor Who - S10E05 (069) - The Green Death - Parts 1-6")
-  }*/
+  }
 
   def assertStoryMoved(actualFixture: Path, expectedFixture: Path, storyFolderName: String): Unit =
     val actualStoryPath   = actualFixture / "doctorwho-s10" / "season 10 doctor 3" / storyFolderName
