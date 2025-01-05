@@ -87,11 +87,24 @@ class OrganizerIntegrationTests extends FixtureAnyFlatSpec {
     assertStoryMoved(actualFixture, expectedFixture, storyFolderName)
   }
 
+  def getPartCountOfStory(storyName: String): Option[Int] =
+    storyName.split('-').lastOption.flatMap(partsString => partsString.trim.replace("Parts 1-", "").toIntOption)
+
   it should "move all stories in season 10" in { case (actualFixture, expectedFixture) =>
     val actualSeasonPath   = actualFixture / "doctorwho-s10" / "season 10 doctor 3"
-    val expectedSeasonPath = expectedFixture / "doctorwho-s10" / "season 10 doctor 3"
 
     // Perform magic...
+    var storyNumber = 65
+    var episodeOffset = 0
+    os.walk(actualSeasonPath, maxDepth = 1).foreach(actualStoryPath => {
+      val reorganizer = StoryReorganizer.reorganizeStory(actualStoryPath, episodeOffset, storyNumber)
+      val reorganized = reorganizer.reorganized(Some(actualStoryPath / os.up))
+      FileUtility.massFileOperation(reorganized, MoveFileOperation())
+
+      val partCount = getPartCountOfStory(actualStoryPath.last)
+      episodeOffset = episodeOffset + partCount.get
+      storyNumber = storyNumber + 1
+    })
 
     // Assert
     assertStoryMoved(actualFixture, expectedFixture, "Doctor Who - S10E01 (065) - The Three Doctors - Parts 1-4")
