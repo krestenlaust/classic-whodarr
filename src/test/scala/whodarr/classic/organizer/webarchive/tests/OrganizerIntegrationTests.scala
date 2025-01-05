@@ -37,15 +37,19 @@ class OrganizerIntegrationTests extends FixtureAnyFlatSpec {
   override protected type FixtureParam = (os.Path, os.Path)
 
   it should "move story no. 66" in { case (actualFixture, expectedFixture) =>
-    val storyFolderName   = "Doctor Who - S10E02 (066) - Carnival of Monsters - Parts 1-4"
-    val actualStoryPath   = actualFixture / "doctorwho-s10" / "season 10 doctor 3" / storyFolderName
-    val expectedStoryPath = expectedFixture / "doctorwho-s10" / "season 10 doctor 3" / storyFolderName
+    val storyFolderName = "Doctor Who - S10E02 (066) - Carnival of Monsters - Parts 1-4"
+    val actualStoryPath = actualFixture / "doctorwho-s10" / "season 10 doctor 3" / storyFolderName
+    val episodeOffset   = 4
+    val storyNumber     = 66
 
-    val reorganizer = StoryReorganizer.reorganizeStory(actualStoryPath, 4, 66)
+    // Perform calculations to find new file paths
+    val reorganizer = StoryReorganizer.reorganizeStory(actualStoryPath, episodeOffset, storyNumber)
     val reorganized = reorganizer.reorganized(Some(actualStoryPath / os.up))
 
+    // Move files around the new paths
     FileUtility.massFileOperation(reorganized, MoveFileOperation())
 
+    // Assert that the files have been moved correctly
     assertStoryMoved(actualFixture, expectedFixture, storyFolderName)
   }
 
