@@ -29,6 +29,7 @@ jobs:
     - name: Upload dependency graph
       uses: scalacenter/sbt-dependency-submission@ab086b50c947c9774b70f39fc7f6e20ca2706c91
     - name: Upload coverage reports to Codecov
+      if: ${{ github.event_name == 'push' || !github.event.pull_request.draft }}
       uses: codecov/codecov-action@v4.0.1
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
