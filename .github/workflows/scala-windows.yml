@@ -11,12 +11,16 @@ jobs:
     runs-on: windows-latest
 
     steps:
+      - name: Configure git
+        run: "git config --global core.autocrlf false"
+        shell: bash
       - uses: actions/checkout@v3
 
       - name: Setup Scala (sbt) (based on Adoptium)
         uses: olafurpg/setup-scala@v10
 
       - name: Run tests
+        shell: bash
         run: sbt test
 
       # Optional: This step uploads information to the GitHub dependency graph and unblocking Dependabot alerts for the repository
