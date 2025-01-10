@@ -1,8 +1,8 @@
 package whodarr.classic.util
 
+import os.Path
+
 import java.io.File
-import java.nio.file.{ Files, Path, Paths }
-import scala.collection.JavaConverters.*
 import scala.util.Try
 
 object FileUtility:
@@ -11,11 +11,8 @@ object FileUtility:
     val targetFile = File(dstPath.toString)
     fileToMove.renameTo(targetFile)
 
-  def getFilePathsInFolder(folderPath: String): Try[Seq[Path]] =
-    Try(
-      Files
-        .list(Paths.get(folderPath))
-        .iterator()
-        .asScala
-        .toSeq
-    )
+  def filesInFolder(folderPath: Path): Try[IndexedSeq[Path]] =
+    Try(os.list(folderPath))
+
+  def massFileOperation[A](fileMappings: Map[A, A], fileLinker: FileOperation[A]): Unit =
+    fileMappings.foreach(mapping => fileLinker.operation(mapping._1, mapping._2))

@@ -1,3 +1,3 @@
 package whodarr.classic.episodeinfo
 
-case class EpisodeId(seasonNumber: Int, episodeNumber: Int)
+case class EpisodeId(season: SeasonId, episodeNumber: Int)
